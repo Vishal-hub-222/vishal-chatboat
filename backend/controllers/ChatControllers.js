@@ -4,7 +4,7 @@ import Thread from "../models/Thread.js";
 export const chat=async(req,res)=>{
     
         const {threadId,message}=req.body;
-        if(!threadId || !message) return res.status(400).json({error:"missing required fields"});
+        if(!threadId || typeof message !== "string" || !message.trim()) return res.status(400).json({error:"threadId and a non-empty message are required"});
         try{
        let thread=await Thread.findOne({threadId});
        if(!thread)
@@ -12,13 +12,13 @@ export const chat=async(req,res)=>{
         thread=new Thread(
             {
                 threadId,
-                title:message,
-                messages:[{role:"user",content:message}]
+                title:message.trim(),
+                messages:[{role:"user",content:message.trim()}]
             }
         )
        }else
        {
-        thread.messages.push({role:"user",content:message})
+        thread.messages.push({role:"user",content:message.trim()})
        }
 
 
@@ -30,7 +30,8 @@ export const chat=async(req,res)=>{
        res.json({reply:assistantReply});
 
     }catch(err){
-        res.status(500).json({error: err.message});
+        console.error("Chat request failed:", err);
+        res.status(500).json({error: "Unable to generate a response"});
     }
 }
 
@@ -52,7 +53,7 @@ export const threadId=async(req,res)=>{
         const threadDetails=await Thread.findOne({threadId});
         if(!threadDetails)
         {
-          res.status(400).json({error:"Thread not found"});
+          return res.status(404).json({error:"Thread not found"});
         }
         res.json(threadDetails.messages);
     }catch(e){
@@ -66,7 +67,7 @@ export const Delete = async(req,res)=>{
        const deletedThread=await Thread.findOneAndDelete({threadId});
 
        if(!deletedThread){
-        res.status(404).json({error:"Thread could not found"});
+        return res.status(404).json({error:"Thread could not be found"});
        }
        res.status(200).json({success:"Thread deleted successfully"});
      }catch(e){
