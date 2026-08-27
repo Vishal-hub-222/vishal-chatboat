@@ -24,21 +24,17 @@ const ThreadSchema= new mongoose.Schema({
         required:true,
         unique:true
     },
+    userId:{
+        type:String,
+        required:true
+    },
     title:{
         type:String,
         default:"New Chat"
     },
-    messages:[MessageSchema],
-    createAt:{
-        type:Date,
-        default:Date.now
-    },
-    updatedAt:{
-        type:Date,
-        default:Date.now
-    }
+    messages:[MessageSchema]
 
-});
+},{timestamps: true});
 
 const Thread = mongoose.model("Thread",ThreadSchema);
 

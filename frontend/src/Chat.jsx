@@ -15,8 +15,6 @@ function Chat() {
             return;
         }
 
-        if(!prevChats?.length) return;
-
         const content = reply.split(" "); //individual words
 
         let idx = 0;
@@ -29,7 +27,7 @@ function Chat() {
 
         return () => clearInterval(interval);
 
-    }, [prevChats, reply])
+    }, [reply])
 
     return (
         <>

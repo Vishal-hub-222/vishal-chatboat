@@ -23,8 +23,13 @@ export async function chatWithGemini(prompt) {
 
   const data = await response.json();
 
+  if (!data.candidates || !data.candidates[0]?.content?.parts?.[0]?.text) {
+    throw new Error("Invalid response from Gemini API: " + JSON.stringify(data));
+  }
+
   return data.candidates[0].content.parts[0].text;
 }catch(e){
-    console.log(e.message);
+    console.log("Gemini error:", e.message);
+    throw e;
 }
 }
