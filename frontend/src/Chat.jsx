@@ -1,5 +1,5 @@
 import "./Chat.css";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { MyContext } from "./MyContext";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
@@ -8,6 +8,7 @@ import "highlight.js/styles/github-dark.css";
 function Chat() {
     const {newChat, prevChats, reply} = useContext(MyContext);
     const [latestReply, setLatestReply] = useState(null);
+    const bottomRef = useRef(null);
 
     useEffect(() => {
         if(reply === null) {
@@ -27,7 +28,12 @@ function Chat() {
 
         return () => clearInterval(interval);
 
-    }, [reply])
+    }, [reply]);
+
+    // Auto-scroll to bottom whenever messages update
+    useEffect(() => {
+        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [prevChats, latestReply]);
 
     return (
         <>
@@ -64,6 +70,8 @@ function Chat() {
                     )
                 }
 
+                {/* Scroll anchor */}
+                <div ref={bottomRef} />
             </div>
         </>
     )

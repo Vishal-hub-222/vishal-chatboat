@@ -33,7 +33,7 @@ function EditProfile() {
 
         setLoading(true);
         try {
-            const res = await fetch("http://localhost:8080/api/auth/profile", {
+            const res = await fetch("https://vishal-chatboat.onrender.com/api/auth/profile", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

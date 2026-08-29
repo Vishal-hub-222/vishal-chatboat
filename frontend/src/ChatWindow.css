@@ -55,7 +55,7 @@
     align-items: center;
 }
 
-input {
+.inputBox input {
     width: 100%;
     border: none;
     background-color: rgba(255, 255, 255, 0.05);
@@ -69,7 +69,7 @@ input {
                 rgba(0, 0, 0, 0.05) 0 -3px 5px;
 }
 
-input:focus {
+.inputBox input:focus {
     outline: none;
 }
 

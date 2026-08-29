@@ -9,7 +9,7 @@
 }
 
 
-button {
+.sidebar button {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -29,11 +29,11 @@ button {
     object-fit: cover;
 }
 
-button span {
+.sidebar button span {
     font-size: 20px;
 }
 
-button:hover {
+.sidebar button:hover {
     background-color: rgba(180, 180, 180, 0.05);
 }
 

@@ -19,7 +19,7 @@ function Login() {
         setLoading(true);
 
         try {
-            const res = await fetch("http://localhost:8080/api/auth/login", {
+            const res = await fetch("https://vishal-chatboat.onrender.com/api/auth/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(form)
@@ -68,13 +68,14 @@ function Login() {
                         <input
                             type="password"
                             name="password"
-                            placeholder="••••••••"
+                            placeholder="password"
                             value={form.password}
                             onChange={handleChange}
                             required
                         />
+                    
                     </div>
-
+                    
                     {error && <p className="auth-error">{error}</p>}
 
                     <button type="submit" className="auth-btn" disabled={loading}>

@@ -1,7 +1,8 @@
-﻿import "./Sidebar.css";
+import "./Sidebar.css";
 import { useContext, useEffect } from "react";
 import { MyContext } from "./MyContext.jsx";
 import { v1 as uuidv1 } from "uuid";
+import blacklogo from "./assets/blacklogo.png";
 
 function Sidebar() {
     const { allThreads, setAllThreads, currThreadId, setNewChat, setPrompt,
@@ -11,7 +12,7 @@ function Sidebar() {
 
     const getAllThreads = async () => {
         try {
-            const response = await fetch("http://localhost:8080/api/thread", { headers: authHeader });
+            const response = await fetch("https://vishal-chatboat.onrender.com/api/thread", { headers: authHeader });
             const res = await response.json();
             const filteredData = res.map(thread => ({ threadId: thread.threadId, title: thread.title }));
             setAllThreads(filteredData);
@@ -35,7 +36,7 @@ function Sidebar() {
     const changeThread = async (newThreadId) => {
         setCurrThreadId(newThreadId);
         try {
-            const response = await fetch(`http://localhost:8080/api/thread/${newThreadId}`, { headers: authHeader });
+            const response = await fetch(`https://vishal-chatboat.onrender.com/api/thread/${newThreadId}`, { headers: authHeader });
             const res = await response.json();
             setPrevChats(res);
             setNewChat(false);
@@ -47,7 +48,7 @@ function Sidebar() {
 
     const deleteThread = async (threadId) => {
         try {
-            const response = await fetch(`http://localhost:8080/api/thread/${threadId}`, {
+            const response = await fetch(`https://vishal-chatboat.onrender.com/api/thread/${threadId}`, {
                 method: "DELETE",
                 headers: authHeader
             });
@@ -63,7 +64,7 @@ function Sidebar() {
     return (
         <section className="sidebar">
             <button onClick={createNewChat}>
-                <img src="src/assets/blacklogo.png" alt="gpt logo" className="logo"></img>
+                <img src={blacklogo} alt="gpt logo" className="logo" />
                 <span><i className="fa-solid fa-pen-to-square"></i></span>
             </button>
 
